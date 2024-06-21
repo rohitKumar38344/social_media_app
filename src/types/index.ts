@@ -1,5 +1,11 @@
 import React from "react";
 
+export type INavLink = {
+  imgURL: string;
+  route: string;
+  label: string;
+};
+
 export type INewUser = {
   name: string;
   email: string;
