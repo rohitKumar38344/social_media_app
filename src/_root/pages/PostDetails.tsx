@@ -13,7 +13,7 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 
 export default function PostDetails() {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id } = useParams<string>();
   const { user } = useUserContext();
 
   const { data: post, isLoading } = useGetPostById(id || "");
@@ -27,8 +27,12 @@ export default function PostDetails() {
   );
 
   const handleDeletePost = () => {
-    deletePost({ postId: id, imageId: post?.imageId });
-    navigate(-1);
+    if (id && post?.imageId) {
+      deletePost({ postId: id, imageId: post.imageId });
+      navigate(-1);
+    } else {
+      console.log("Post ID or Image ID is undefined");
+    }
   };
 
   return (

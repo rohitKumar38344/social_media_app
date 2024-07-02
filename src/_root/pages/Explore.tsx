@@ -10,11 +10,6 @@ import {
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-export type SearchResultProps = {
-  isSearchFetching: boolean;
-  searchedPosts: any;
-};
-
 const Explore = () => {
   const { ref, inView } = useInView();
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
