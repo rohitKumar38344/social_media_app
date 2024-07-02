@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { SignupValidation } from "../../lib/validaton";
 import { z } from "zod";
 import Loader from "../../components/shared/Loader";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "../../components/ui/use-toast";
 import {
   useCreateUserAccount,
@@ -25,9 +25,9 @@ export default function SignupForm() {
   const { toast } = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const navigate = useNavigate();
-  const { mutateAsync: createUserAccount, isPending: isCreatingUser } =
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } =
     useCreateUserAccount();
-  const { mutateAsync: signInAccount, isPending: isSigninIn } =
+  const { mutateAsync: signInAccount, isPending: isSigningInUser } =
     useSignInAccount();
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupValidation>>({
@@ -135,13 +135,12 @@ export default function SignupForm() {
             )}
           />
           <Button type="submit" className="shad-button_primary">
-            {isCreatingUser ? (
+            {isCreatingAccount || isSigningInUser || isUserLoading ? (
               <div className="flex-center gap-2">
-                <Loader />
-                Loading...
+                <Loader /> Loading...
               </div>
             ) : (
-              "Sign up"
+              "Sign Up"
             )}
           </Button>
           <p className="text-center text-small-regular text-light-2 mt-2">

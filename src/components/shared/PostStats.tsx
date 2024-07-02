@@ -1,5 +1,3 @@
-import { useUserContext } from "@/context/AuthContext";
-import { deleteSavePost } from "@/lib/appwrite/api";
 import {
   useDeleteSavedPost,
   useGetCurrentUser,
@@ -12,7 +10,7 @@ import { useEffect, useState } from "react";
 import Loader from "./Loader";
 
 type PostStatsProps = {
-  post: Models.document;
+  post: Models.Document;
   userId: string;
 };
 
@@ -23,7 +21,7 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 
   const { mutate: likePost } = useLikePost();
   const { mutate: savePost, isPending: isSavingPost } = useSavePost();
-  const { mutate: deletePost, isPending: isDeletingSaved } =
+  const { mutate: deleteSavePost, isPending: isDeletingSaved } =
     useDeleteSavedPost();
 
   const { data: currentUser } = useGetCurrentUser();
@@ -96,6 +94,3 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
 };
 
 export default PostStats;
-function useDeleteSavePost(): { mutate: any } {
-  throw new Error("Function not implemented.");
-}

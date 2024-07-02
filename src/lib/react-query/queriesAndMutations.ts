@@ -11,7 +11,6 @@ import {
   deletePost,
   deleteSavePost,
   getCurrentUser,
-  getInfinitePosts,
   getPostById,
   getRecentPosts,
   getUserPosts,
@@ -24,6 +23,7 @@ import {
   updatePost,
   getUserById,
   updateUser,
+  getInfinitePosts,
 } from "../appwrite/api";
 import { QUERY_KEYS } from "./queryKeys";
 
@@ -221,7 +221,7 @@ export const useUpdatePost = () => {
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ postId, imageId }: { postId?: string; imageId: string }) =>
+    mutationFn: ({ postId, imageId }: { postId: string; imageId: string }) =>
       deletePost(postId, imageId),
     onSuccess: () => {
       queryClient.invalidateQueries({

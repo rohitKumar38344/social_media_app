@@ -22,15 +22,16 @@ import {
 } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import Loader from "../shared/Loader";
+import { Models } from "appwrite";
 
 type PostFormProps = {
-  post?: Models.document;
+  post?: Models.Document;
   action: "Create" | "Update";
 };
 const PostForm = ({ post, action }: PostFormProps) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
-  const { mutateAsync: updatePost, isLoading: isLoadingUpdate } =
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
     useUpdatePost();
   const navigate = useNavigate();
   const { user } = useUserContext();

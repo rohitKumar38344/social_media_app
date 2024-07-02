@@ -18,17 +18,16 @@ export type SearchResultProps = {
 const Explore = () => {
   const { ref, inView } = useInView();
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
-
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearch = useDebounce(searchValue, 500);
   const { data: searchedPosts, isFetching: isSearchFetching } =
     useSearchPosts(debouncedSearch);
 
-  // useEffect(() => {
-  //   if (inView && !searchValue) {
-  //     fetchNextPage();
-  //   }
-  // }, [inView, searchValue]);
+  useEffect(() => {
+    if (inView && !searchValue) {
+      fetchNextPage();
+    }
+  }, [inView, searchValue]);
 
   if (!posts)
     return (
@@ -40,12 +39,11 @@ const Explore = () => {
   const shouldShowSearchResults = searchValue !== "";
   const shouldShowPosts =
     !shouldShowSearchResults &&
-    posts.pages.every((item) => item.documents.length === 0);
-
+    posts?.pages.every((item) => item.documents.length === 0);
   return (
     <div className="explore-container">
       <div className="explore-inner_container">
-        <h2 className="h3-bold md:h2-bold w-full">Search Posts</h2>
+        <h2 className="h3:bold md:h2-bold w-full">Search Post</h2>
         <div className="flex gap-1 px-4 w-full rounded-lg bg-dark-4">
           <img
             src="/assets/icons/search.svg"
@@ -65,7 +63,6 @@ const Explore = () => {
           />
         </div>
       </div>
-
       <div className="flex-between w-full max-w-5xl mt-16 mb-7">
         <h3 className="body-bold md:h3-bold">Popular Today</h3>
 
@@ -79,7 +76,6 @@ const Explore = () => {
           />
         </div>
       </div>
-
       <div className="flex flex-wrap gap-9 w-full max-w-5xl">
         {shouldShowSearchResults ? (
           <SearchResults
@@ -94,7 +90,6 @@ const Explore = () => {
           ))
         )}
       </div>
-
       {hasNextPage && !searchValue && (
         <div ref={ref} className="mt-10">
           <Loader />
